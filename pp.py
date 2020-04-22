@@ -126,7 +126,10 @@ for index, letter in enumerate(text):
 copy.save(f'text{page_no}.png')
 copy.convert("RGB")
 image_list.append(copy)
-os.mkdir("MyPdf")
+try:
+    os.mkdir("MyPdf")
+except FileExistsError:
+    pass
 first_image.save(r"MyPdf\assignment.pdf", save_all=True, append_images=image_list)
 
 #Getting the width and height of the text
