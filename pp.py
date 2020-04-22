@@ -77,6 +77,8 @@ lwidth = 0
 
 page_lmar+=10
 page_line_space -=2
+image_list = []
+
 for index, letter in enumerate(text):
     '''if(letter == " "):
                     #letter = "  "
@@ -85,6 +87,11 @@ for index, letter in enumerate(text):
         print("OK")
         print(page_no)
         print(twidth, page_ver-page_bmar)
+        temp_copy = copy.convert("RGB")
+        if(page_no == 1):
+            first_image = temp_copy
+        else:
+            image_list.append(temp_copy)
         copy.save(f'text{page_no}.png')
         copy = page.copy()
         draw = ImageDraw.Draw(copy)
@@ -117,6 +124,11 @@ for index, letter in enumerate(text):
     '''print(twidth, page_ver-page_bmar)'''
 
 copy.save(f'text{page_no}.png')
+copy.convert("RGB")
+image_list.append(copy)
+os.mkdir("MyPdf")
+first_image.save(r"MyPdf\assignment.pdf", save_all=True, append_images=image_list)
+
 #Getting the width and height of the text
 '''total_text_width, text_height = draw.textsize(text, myfont)
 
