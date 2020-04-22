@@ -8,3 +8,4 @@ The page is saved in jpg format with the name page, will add more compatibility 
       2) Install dependencies by typing pip install -r requirements.txt
       3) Your Colleges Scanned Assigment Paper should be named as page and stored in .jpg format
       4) Run the program
+      5) Enter Your Pages dimensions in Centimeters
