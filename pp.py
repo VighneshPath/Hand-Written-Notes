@@ -83,7 +83,25 @@ for index, letter in enumerate(text):
     '''if(letter == " "):
                     #letter = "  "
                     space = index'''
-    if((twidth+page_line_space >= page_ver - page_bmar) and lwidth >= (page_hor-page_lmar-100)):
+    if(letter == " "):
+        nlflag = 0
+        for i in range(index+1, len(text)):
+            if(text[i] == " "):
+                nlflag = 1
+                break
+        print((lwidth+draw.textsize(text[index:i], myfont)[0]) >= page_hor-page_lmar-100)
+        if(nlflag == 1):
+            temp_width = draw.textsize(text[index:i], myfont)[0]
+            if((lwidth+temp_width) >= (page_hor-page_lmar-100)):
+                print("Should be on new Line")
+                twidth = twidth + page_line_space
+                lwidth = 0
+                continue
+                '''twidth += page_line_space
+                                                                lwidth = 0'''
+
+    if((twidth+page_line_space >= page_ver - page_bmar + 50)):
+        print("HERE MUHAHAHAHAH")
         print("OK")
         print(page_no)
         print(twidth, page_ver-page_bmar)
