@@ -2,6 +2,10 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 import random
 import shelve
+import time
+import sys
+import threading
+
 
 shelfFile = shelve.open("PageDim")
 
@@ -43,7 +47,6 @@ except:
     #Page Size is stored in the format Page Horizontal, Page Vertical, Page Left Margin, Page Top Margin, Page Bottom Margin, Page Line Space
     shelfFile["pagedimensions"] = [page_hor, page_ver, page_lmar, page_tmar, page_bmar, page_line_space]
 
-
 #Making a copy of the blank page
 copy = page.copy()
 
@@ -53,7 +56,7 @@ draw = ImageDraw.Draw(copy)
 '''#Location of fonts folder
 fonts_folder = "C:\\Users\\troge\\Desktop\\tempfont\\fonts"'''
 #Making ImageFont object of users font
-myfont = ImageFont.truetype("icomoon.ttf", 64)
+myfont = ImageFont.truetype("IndieFlower-Regular.ttf", 90)
 
 '''print("Enter Text that you want on the paper")'''
 with open("writing_text.txt", "r") as f:
@@ -70,14 +73,19 @@ lwidth = 0'''
 
 
 page_no = 1
-twidth = page_tmar
+
 lwidth = 0
 
 # page_hor, page_ver, page_lmar, page_tmar, page_bmar, page_line_space
 
 page_lmar+=10
-page_line_space -=2
+page_line_space -= 2.5
+#page_line_space += 10
 image_list = []
+page_lmar += 2
+page_tmar -= 15
+
+twidth = page_tmar
 
 for index, letter in enumerate(text):
     '''if(letter == " "):
@@ -89,11 +97,9 @@ for index, letter in enumerate(text):
             if(text[i] == " "):
                 nlflag = 1
                 break
-        print((lwidth+draw.textsize(text[index:i], myfont)[0]) >= page_hor-page_lmar-100)
         if(nlflag == 1):
             temp_width = draw.textsize(text[index:i], myfont)[0]
             if((lwidth+temp_width) >= (page_hor-page_lmar-100)):
-                print("Should be on new Line")
                 twidth = twidth + page_line_space
                 lwidth = 0
                 continue
@@ -101,10 +107,6 @@ for index, letter in enumerate(text):
                                                                 lwidth = 0'''
 
     if((twidth+page_line_space >= page_ver - page_bmar + 50)):
-        print("HERE MUHAHAHAHAH")
-        print("OK")
-        print(page_no)
-        print(twidth, page_ver-page_bmar)
         temp_copy = copy.convert("RGB")
         if(page_no == 1):
             first_image = temp_copy
@@ -149,6 +151,9 @@ try:
 except FileExistsError:
     pass
 first_image.save(r"MyPdf\assignment.pdf", save_all=True, append_images=image_list)
+sys.stdout.write("\033[K")
+print("DONE!", end = "\r")
+
 
 #Getting the width and height of the text
 '''total_text_width, text_height = draw.textsize(text, myfont)
@@ -217,3 +222,5 @@ draw.text((20,150), text, fill = "blue", font = myfont)
 
 img.save('text.png')
 '''
+
+
