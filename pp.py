@@ -1,3 +1,4 @@
+
 from PIL import Image, ImageDraw, ImageFont
 import os
 import random
@@ -150,9 +151,13 @@ try:
     os.mkdir("MyPdf")
 except FileExistsError:
     pass
-first_image.save(r"MyPdf\assignment.pdf", save_all=True, append_images=image_list)
-sys.stdout.write("\033[K")
-print("DONE!", end = "\r")
+try:
+    first_image.save(r"MyPdf\assignment.pdf", save_all=True, append_images=image_list)
+    print("DONE!", end = "\r")
+except:
+    first_image = copy
+    first_image.save(r"MyPdf\assignment.pdf", save_all=True)
+    print("DONE!", end = "\r")
 
 
 #Getting the width and height of the text
